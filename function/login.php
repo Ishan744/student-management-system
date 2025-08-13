@@ -5,17 +5,12 @@ require_once '../config/db.php';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Trim and escape inputs
-    $name = mysqli_real_escape_string($conn, trim($_POST['name']));
     $email = mysqli_real_escape_string($conn, trim($_POST['email']));
     $password = mysqli_real_escape_string($conn, trim($_POST['password']));
-    $c_password = mysqli_real_escape_string($conn, trim($_POST['c_password']));
-    $agree = isset($_POST['agree']) ? 1 : 0;
 
     // Validation
-    if (empty($name) || empty($email) || empty($password) || empty($c_password)) {
+    if ( empty($email) || empty($password) || empty($c_password)) {
         echo "All fields are required.";
-    } elseif (!preg_match("/^[a-zA-Z\s]{3,}$/", $name)) {
-        echo "Name must be at least 3 letters and contain only letters and spaces.";
     } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         echo "Invalid email address.";
     } elseif (strlen($password) < 6) {
@@ -61,7 +56,7 @@ $check->close();
     
     // Close connection
     $conn->close();
-} else {
+}else {
     echo "Invalid request method.";
 }
 
